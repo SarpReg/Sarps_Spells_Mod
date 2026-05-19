@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import net.sarpreg.sarpsspells.registries.SarpySpellRegistry;
 import org.slf4j.Logger;
 
@@ -34,6 +35,7 @@ public class SarpsSpellsMod
         MinecraftForge.EVENT_BUS.register(this);
 
         SarpySpellRegistry.register(modEventBus);
+        SarpMobEffectRegistry.register(modEventBus);
 
 
         // Register the item to a creative tab

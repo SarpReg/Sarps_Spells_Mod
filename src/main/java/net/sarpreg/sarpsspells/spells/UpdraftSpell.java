@@ -7,7 +7,7 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.player.SpinAttackType;
-import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
+import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -100,10 +100,10 @@ public class UpdraftSpell extends AbstractSpell {
         ));
 
 
-        entity.addEffect(new MobEffectInstance(MobEffectRegistry.BURNING_DASH.get(), 15, getDamage(spellLevel, entity), false, false, false));
+        entity.addEffect(new MobEffectInstance(SarpMobEffectRegistry.UPDRAFT.get(), 15, getDamage(spellLevel, entity), false, false, false));
         entity.invulnerableTime = 20;
         //startSpinAttack(entity, 10);
-        playerMagicData.getSyncedData().setSpinAttackType(SpinAttackType.RIPTIDE);
+        playerMagicData.getSyncedData().setSpinAttackType(new SpinAttackType(ResourceLocation.withDefaultNamespace("textures/entity/trident_riptide.png"), false));
         super.onCast(world, spellLevel, entity, castSource, playerMagicData);
     }
 
