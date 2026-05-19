@@ -140,12 +140,19 @@ repositories {
         name "KosmX's maven"
         url 'https://maven.kosmx.dev/'
     }
+    repositories {
+        maven {
+            name = "Illusive Soulworks maven"
+            url = "https://maven.theillusivec4.top/"
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}")
+    compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
+    runtimeOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}")
 
     implementation fg.deobf("io.redspace:irons_lib:${irons_lib_version}")
 
@@ -153,6 +160,8 @@ dependencies {
     implementation("com.eliotlash.mclib:mclib:20")
 
     implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${playeranimator_version}")
+
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
 }
 
