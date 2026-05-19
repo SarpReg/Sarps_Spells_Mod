@@ -151,8 +151,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
-    runtimeOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}")
+    implementation fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}")
 
     implementation fg.deobf("io.redspace:irons_lib:${irons_lib_version}")
 
