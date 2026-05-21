@@ -5,8 +5,14 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
+import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.player.SpinAttackType;
+import io.redspace.ironsspellbooks.registries.SoundRegistry;
+import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -20,6 +26,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import io.redspace.ironsspellbooks.capabilities.magic.ImpulseCastData;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+
+import java.util.Optional;
 
 public class UpdraftSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "updraft");
@@ -61,6 +70,12 @@ public class UpdraftSpell extends AbstractSpell {
             entity.hasImpulse = bdcd.hasImpulse;
             entity.setDeltaMovement(entity.getDeltaMovement().add(bdcd.x, bdcd.y, bdcd.z));
         }
+
+        var x = entity.getX();
+        var y = entity.getY() + 1;
+        var z = entity.getZ();
+        MagicManager.spawnParticles(level, ParticleHelper.FOG, x, y, z, 10, .08, .08, .08, 0.3, false);
+        MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 2), x, y + .15f, z, 1, 0, 0, 0, 0, true);
 
         super.onClientCast(level, spellLevel, entity, castData);
     }
@@ -105,6 +120,11 @@ public class UpdraftSpell extends AbstractSpell {
         //startSpinAttack(entity, 10);
         playerMagicData.getSyncedData().setSpinAttackType(new SpinAttackType(ResourceLocation.withDefaultNamespace("textures/entity/trident_riptide.png"), false));
         super.onCast(world, spellLevel, entity, castSource, playerMagicData);
+    }
+
+    @Override
+    public Optional<SoundEvent> getCastStartSound() {
+        return Optional.of(SoundRegistry.GUST_CAST.get());
     }
 
     @Override
