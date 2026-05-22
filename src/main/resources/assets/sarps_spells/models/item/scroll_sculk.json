@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "sarps_spells:item/scroll_sculk"
+    "layer0": "irons_spellbooks:item/scroll_sculk"
   }
 }
