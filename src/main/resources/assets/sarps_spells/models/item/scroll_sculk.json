@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "sarps_spells:item/scroll_sculk"
+  }
+}

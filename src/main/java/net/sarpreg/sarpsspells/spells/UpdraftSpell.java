@@ -27,6 +27,7 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import io.redspace.ironsspellbooks.capabilities.magic.ImpulseCastData;
+import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -38,7 +39,8 @@ public class UpdraftSpell extends AbstractSpell {
     /** Declare the default state of your config here */
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.RARE)
-            .setSchoolResource(SchoolRegistry.EVOCATION_RESOURCE)
+            //.setSchoolResource(SchoolRegistry.EVOCATION_RESOURCE)
+            .setSchoolResource(SarpySchoolRegistry.SCULK_RESOURCE)
             .setMaxLevel(10)
             .setCooldownSeconds(20)
             .build();
@@ -65,6 +67,11 @@ public class UpdraftSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.INSTANT;
+    }
+
+    @Override
+    public SchoolType getSchoolType() {
+        return SarpySchoolRegistry.SCULK.get();
     }
 
     public void onClientCast(Level level, int spellLevel, LivingEntity entity, ICastData castData) {

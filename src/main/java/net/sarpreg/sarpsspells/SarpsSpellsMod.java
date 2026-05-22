@@ -1,6 +1,8 @@
 package net.sarpreg.sarpsspells;
 
 import com.mojang.logging.LogUtils;
+import io.redspace.ironsspellbooks.IronsSpellbooks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -12,7 +14,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
+import net.sarpreg.sarpsspells.registries.SarpttributeRegistry;
+import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
 import net.sarpreg.sarpsspells.registries.SarpySpellRegistry;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -36,6 +41,8 @@ public class SarpsSpellsMod
 
         SarpySpellRegistry.register(modEventBus);
         SarpMobEffectRegistry.register(modEventBus);
+        SarpttributeRegistry.register(modEventBus);
+        SarpySchoolRegistry.register(modEventBus);
 
 
         // Register the item to a creative tab
@@ -69,5 +76,9 @@ public class SarpsSpellsMod
         {
 
         }
+    }
+
+    public static ResourceLocation id(@NotNull String path) {
+        return ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, path);
     }
 }
