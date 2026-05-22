@@ -1,5 +1,9 @@
 {
   "spell.sarps_spells.updraft": "Updraft",
   "spell.sarps_spells.updraft.guide": "Quickly launch yourself forward with strong winds, harmless to creatures.",
+  "spell.sarps_spells.levitate": "Levitate",
+  "spell.sarps_spells.levitate.guide": "Cast to curse a targeted creature with levitation, making them fall a great distance when the effect ends.",
+
+
   "effect.sarps_spells.updraft": "Updraft"
 }

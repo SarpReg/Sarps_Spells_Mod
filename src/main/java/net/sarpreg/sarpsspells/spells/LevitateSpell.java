@@ -11,7 +11,6 @@ import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.api.util.RaycastBuilder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
-import io.redspace.ironsspellbooks.entity.spells.root.RootEntity;
 import io.redspace.ironsspellbooks.util.Log;
 import io.redspace.ironsspellbooks.util.ModTags;
 import net.minecraft.network.chat.Component;
@@ -20,37 +19,39 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
 public class LevitateSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(IronsSpellbooks.MODID, "levitate");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "levitate");
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
-                Component.translatable("ui.irons_spellbooks.effect_length", Utils.timeFromTicks(getDuration(spellLevel, caster), 1))
+                Component.translatable("ui.irons_spellbooks.effect_length", "1.5s", 1)
         );
     }
 
     private final DefaultConfig defaultConfig = new DefaultConfig()
-            .setMinRarity(SpellRarity.UNCOMMON)
+            .setMinRarity(SpellRarity.RARE)
             .setSchoolResource(SchoolRegistry.ENDER_RESOURCE)
-            .setMaxLevel(10)
-            .setCooldownSeconds(35)
+            .setMaxLevel(1)
+            .setCooldownSeconds(45)
             .build();
 
     public LevitateSpell() {
         this.manaCostPerLevel = 3;
         this.baseSpellPower = 5;
         this.spellPowerPerLevel = 1;
-        this.castTime = 40;
+        this.castTime = 20;
         this.baseManaCost = 45;
     }
 
@@ -104,22 +105,8 @@ public class LevitateSpell extends AbstractSpell {
         if (playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData castTargetingData) {
             LivingEntity target = castTargetingData.getTarget((ServerLevel) level);
 
-            if (Log.SPELL_DEBUG) {
-                IronsSpellbooks.LOGGER.debug("RootSpell.onCast.1 targetEntity:{}", target);
-            }
-
-            if (target != null && !target.getType().is(ModTags.CANT_ROOT)) {
-                if (Log.SPELL_DEBUG) {
-                    IronsSpellbooks.LOGGER.debug("RootSpell.onCast.2 targetEntity:{}", target);
-                }
-                Vec3 spawn = target.position();
-                RootEntity rootEntity = new RootEntity(level, entity);
-                rootEntity.setDuration(getDuration(spellLevel, entity));
-                rootEntity.setTarget(target);
-                rootEntity.moveTo(spawn);
-                level.addFreshEntity(rootEntity);
-                target.stopRiding();
-                target.startRiding(rootEntity, true);
+            if (target != null) {
+                target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, (spellLevel * 5) - 1, false, false, true));
             }
         }
 
