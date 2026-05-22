@@ -8,9 +8,11 @@ import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
+import io.redspace.ironsspellbooks.particle.SparkParticleOptions;
 import io.redspace.ironsspellbooks.player.SpinAttackType;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
@@ -71,12 +73,6 @@ public class UpdraftSpell extends AbstractSpell {
             entity.setDeltaMovement(entity.getDeltaMovement().add(bdcd.x, bdcd.y, bdcd.z));
         }
 
-        var x = entity.getX();
-        var y = entity.getY() + 1;
-        var z = entity.getZ();
-        MagicManager.spawnParticles(level, ParticleHelper.FOG, x, y, z, 10, .08, .08, .08, 0.3, false);
-        MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 2), x, y + .15f, z, 1, 0, 0, 0, 0, true);
-
         super.onClientCast(level, spellLevel, entity, castData);
     }
 
@@ -115,10 +111,22 @@ public class UpdraftSpell extends AbstractSpell {
         ));
 
 
-        entity.addEffect(new MobEffectInstance(SarpMobEffectRegistry.UPDRAFT.get(), 15, getDamage(spellLevel, entity), false, false, false));
+        entity.addEffect(new MobEffectInstance(SarpMobEffectRegistry.UPDRAFT.get(), 35, getDamage(spellLevel, entity), false, false, false));
         entity.invulnerableTime = 20;
         //startSpinAttack(entity, 10);
         playerMagicData.getSyncedData().setSpinAttackType(new SpinAttackType(ResourceLocation.withDefaultNamespace("textures/entity/trident_riptide.png"), false));
+
+
+        var x = entity.getX();
+        var y = entity.getY();
+        var z = entity.getZ();
+
+        for (int i = 0; i < 2; i++) {
+            Vec3 random = Utils.getRandomVec3(.2);
+            world.addParticle(new SparkParticleOptions(new Vector3f(.85f, .85f, .85f)), entity.getRandomX(0.75), entity.getY() + Utils.getRandomScaled(0.75), entity.getRandomZ(0.75), random.x, random.y, random.z);
+        }
+        MagicManager.spawnParticles(world, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 2), x, y - 0.8f, z, 1, 0, 0, 0, 0, true);
+
         super.onCast(world, spellLevel, entity, castSource, playerMagicData);
     }
 

@@ -1,5 +1,5 @@
 {
   "spell.sarps_spells.updraft": "Updraft",
-  "effect.sarps_spells.updraft": "Updraft",
-  "effect.sarps_spells.wind_charged": "Wind Charged"
+  "spell.sarps_spells.updraft.guide": "Quickly launch yourself forward with strong winds, harmless to creatures.",
+  "effect.sarps_spells.updraft": "Updraft"
 }
