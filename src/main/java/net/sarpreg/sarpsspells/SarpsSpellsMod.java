@@ -13,10 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
-import net.sarpreg.sarpsspells.registries.SarpttributeRegistry;
-import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
-import net.sarpreg.sarpsspells.registries.SarpySpellRegistry;
+import net.sarpreg.sarpsspells.registries.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -43,6 +40,8 @@ public class SarpsSpellsMod
         SarpMobEffectRegistry.register(modEventBus);
         SarpttributeRegistry.register(modEventBus);
         SarpySchoolRegistry.register(modEventBus);
+        EntityRegistry.register(modEventBus);
+        SarparticleRegistry.register(modEventBus);
 
 
         // Register the item to a creative tab

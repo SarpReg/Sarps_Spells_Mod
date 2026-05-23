@@ -5,6 +5,10 @@
   "spell.sarps_spells.levitate.guide": "Cast to curse a targeted creature with levitation, making them fall a great distance when the effect ends.",
   "spell.sarps_spells.emerging_tentacles": "Emerging Tentacles",
   "spell.sarps_spells.emerging_tentacles.guide": "Make tentacles of sculk come out of the ground, damaging anyone below them.",
+  "spell.sarps_spells.sunlight_lance": "Sunlight Lance",
+  "spell.sarps_spells.sunlight_lance.guide": "Hold to charge a lance made of sunlight. Release to throw it, dealing high damage to a an area.",
+
+  "entity.sarps_spells.sunlight_lance": "Sunlight Lance",
 
   "school.sarps_spells.sculk": "Sculk",
 
