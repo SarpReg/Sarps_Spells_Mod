@@ -144,7 +144,7 @@ public class UpdraftSpell extends AbstractSpell {
         var z = entity.getZ();
 
 
-        MagicManager.spawnParticles(world, ParticleTypes.ELECTRIC_SPARK, x, y, z, 70, 0, 0, 0, 1, false);
+        MagicManager.spawnParticles(world, ParticleTypes.POOF, x, y, z, 30, 0, 0, 0, 1, false);
         MagicManager.spawnParticles(world, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 2), x, y - 0.8f, z, 1, 0, 0, 0, 0, true);
 
         super.onCast(world, spellLevel, entity, castSource, playerMagicData);
