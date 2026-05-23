@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class SarpySchoolRegistry {
-    public static final ResourceKey<Registry<SchoolType>> SCHOOL_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "sarpschools"));
+    public static final ResourceKey<Registry<SchoolType>> SCHOOL_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "schools"));
     private static final DeferredRegister<SchoolType> SCHOOLS = DeferredRegister.create(SCHOOL_REGISTRY_KEY, IronsSpellbooks.MODID);
     public static final Supplier<IForgeRegistry<SchoolType>> REGISTRY = SCHOOLS.makeRegistry(() -> new RegistryBuilder<SchoolType>().disableSaving().disableOverrides());
 
@@ -34,11 +34,6 @@ public class SarpySchoolRegistry {
         SCHOOLS.register(eventBus);
     }
 
-//    public static void registerRegistry(NewRegistryEvent event) {
-//        IronsSpellbooks.LOGGER.debug("SchoolRegistry.registerRegistry");
-//        event.register(REGISTRY);
-//    }
-
     private static RegistryObject<SchoolType> registerSchool(SchoolType schoolType) {
         return SCHOOLS.register(schoolType.getId().getPath(), () -> schoolType);
     }
@@ -47,7 +42,7 @@ public class SarpySchoolRegistry {
         return REGISTRY.get().getValue(resourceLocation);
     }
 
-    public static final ResourceLocation SCULK_RESOURCE = SarpsSpellsMod.id("sculk");
+    public static final ResourceLocation SCULK_RESOURCE = IronsSpellbooks.id("sculk");
 
     public static final RegistryObject<SchoolType> SCULK = registerSchool(new SchoolType(
             SCULK_RESOURCE,

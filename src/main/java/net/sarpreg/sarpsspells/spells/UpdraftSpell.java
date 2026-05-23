@@ -39,8 +39,7 @@ public class UpdraftSpell extends AbstractSpell {
     /** Declare the default state of your config here */
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.RARE)
-            //.setSchoolResource(SchoolRegistry.EVOCATION_RESOURCE)
-            .setSchoolResource(SarpySchoolRegistry.SCULK_RESOURCE)
+            .setSchoolResource(SchoolRegistry.EVOCATION_RESOURCE)
             .setMaxLevel(10)
             .setCooldownSeconds(20)
             .build();
@@ -67,11 +66,6 @@ public class UpdraftSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.INSTANT;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SarpySchoolRegistry.SCULK.get();
     }
 
     public void onClientCast(Level level, int spellLevel, LivingEntity entity, ICastData castData) {
