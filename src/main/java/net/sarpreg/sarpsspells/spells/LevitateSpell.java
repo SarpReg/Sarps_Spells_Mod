@@ -106,7 +106,7 @@ public class LevitateSpell extends AbstractSpell {
             LivingEntity target = castTargetingData.getTarget((ServerLevel) level);
 
             if (target != null) {
-                target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 10, false, false, true));
+                target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 13, false, false, true));
             }
         }
 

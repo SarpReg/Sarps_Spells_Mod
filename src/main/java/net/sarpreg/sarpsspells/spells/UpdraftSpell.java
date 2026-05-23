@@ -6,6 +6,7 @@ import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+import io.redspace.ironsspellbooks.capabilities.magic.RecastInstance;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.particle.SparkParticleOptions;
@@ -13,6 +14,9 @@ import io.redspace.ironsspellbooks.player.SpinAttackType;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
@@ -31,21 +35,29 @@ import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UpdraftSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "updraft");
 
+    @Override
+    public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
+        return List.of(
+                Component.translatable("ui.irons_spellbooks.recast_count", getRecastCount(spellLevel, caster))
+        );
+    }
+
     /** Declare the default state of your config here */
     private final DefaultConfig defaultConfig = new DefaultConfig()
-            .setMinRarity(SpellRarity.RARE)
+            .setMinRarity(SpellRarity.EPIC)
             .setSchoolResource(SchoolRegistry.EVOCATION_RESOURCE)
-            .setMaxLevel(10)
+            .setMaxLevel(3)
             .setCooldownSeconds(20)
             .build();
 
     public UpdraftSpell() {
-        this.manaCostPerLevel = 2;
+        this.manaCostPerLevel = 20;
         this.baseSpellPower = 1;
         this.spellPowerPerLevel = 1;
         this.castTime = 0;
@@ -78,12 +90,21 @@ public class UpdraftSpell extends AbstractSpell {
     }
 
     @Override
+    public int getRecastCount(int spellLevel, @Nullable LivingEntity entity) {
+        return spellLevel;
+    }
+
+    @Override
     public ICastDataSerializable getEmptyCastData() {
         return new ImpulseCastData();
     }
 
     @Override
     public void onCast(Level world, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
+        // cooldown check prevents long-cast timing from extending past recast duration and making a zero-cooldown exploit
+        if (!playerMagicData.getPlayerCooldowns().isOnCooldown(this) && !playerMagicData.getPlayerRecasts().hasRecastForSpell(getSpellId())) {
+            playerMagicData.getPlayerRecasts().addRecast(new RecastInstance(getSpellId(), spellLevel, getRecastCount(spellLevel, entity), 120, castSource, null), playerMagicData);
+        }
         entity.hasImpulse = true;
         float multiplier = (15 + getSpellPower(spellLevel, entity)) / 12f;
 
@@ -122,10 +143,8 @@ public class UpdraftSpell extends AbstractSpell {
         var y = entity.getY();
         var z = entity.getZ();
 
-        for (int i = 0; i < 2; i++) {
-            Vec3 random = Utils.getRandomVec3(.2);
-            world.addParticle(new SparkParticleOptions(new Vector3f(.85f, .85f, .85f)), entity.getRandomX(0.75), entity.getY() + Utils.getRandomScaled(0.75), entity.getRandomZ(0.75), random.x, random.y, random.z);
-        }
+
+        MagicManager.spawnParticles(world, ParticleTypes.ELECTRIC_SPARK, x, y, z, 70, 0, 0, 0, 1, false);
         MagicManager.spawnParticles(world, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 2), x, y - 0.8f, z, 1, 0, 0, 0, 0, true);
 
         super.onCast(world, spellLevel, entity, castSource, playerMagicData);

@@ -32,16 +32,16 @@ public class SunlightLanceSpell extends AbstractSpell {
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.RARE)
             .setSchoolResource(SchoolRegistry.HOLY_RESOURCE)
-            .setMaxLevel(10)
-            .setCooldownSeconds(16)
+            .setMaxLevel(5)
+            .setCooldownSeconds(13)
             .build();
 
     public SunlightLanceSpell() {
-        this.manaCostPerLevel = 40;
-        this.baseSpellPower = 14;
-        this.spellPowerPerLevel = 2;
-        this.castTime = 50;
-        this.baseManaCost = 50;
+        this.manaCostPerLevel = 30;
+        this.baseSpellPower = 7;
+        this.spellPowerPerLevel = 1;
+        this.castTime = 30;
+        this.baseManaCost = 150;
     }
 
     @Override

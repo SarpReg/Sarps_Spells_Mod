@@ -117,7 +117,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceRenderer;
+import net.sarpreg.sarpsspells.particle.SunsparkParticle;
 import net.sarpreg.sarpsspells.registries.EntityRegistry;
+import net.sarpreg.sarpsspells.registries.SarparticleRegistry;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
@@ -242,9 +244,7 @@ public class SClientSetup {
 
     @SubscribeEvent
     public static void registerParticles(RegisterParticleProvidersEvent event) {
-        /*
-        event.registerSpriteSet(ParticleRegistry.ELECTRICITY_PARTICLE.get(), ElectricityParticle.Provider::new);
-        */
+        event.registerSpriteSet(SarparticleRegistry.SUNSPARK_PARTICLE.get(), SunsparkParticle.Provider::new);
     }
 
     @SubscribeEvent

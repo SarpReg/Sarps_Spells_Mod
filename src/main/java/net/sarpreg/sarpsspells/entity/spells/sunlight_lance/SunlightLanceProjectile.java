@@ -1,21 +1,33 @@
 package net.sarpreg.sarpsspells.entity.spells.sunlight_lance;
 
+import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
+import io.redspace.ironsspellbooks.network.particles.FieryExplosionParticlesPacket;
+import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
+import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.sarpreg.sarpsspells.registries.EntityRegistry;
 import net.sarpreg.sarpsspells.registries.SarpySpellRegistry;
 import net.sarpreg.sarpsspells.util.SarparticleHelper;
@@ -35,6 +47,9 @@ public class SunlightLanceProjectile extends AbstractMagicProjectile {
     public void impactParticles(double x, double y, double z) {
         MagicManager.spawnParticles(level(), SarparticleHelper.SUNSPARK, x, y, z, 75, .1, .1, .1, 2, true);
         MagicManager.spawnParticles(level(), SarparticleHelper.SUNSPARK, x, y, z, 75, .1, .1, .1, .5, false);
+        MagicManager.spawnParticles(level(), new BlastwaveParticleOptions(SchoolRegistry.HOLY.get().getTargetingColor(), 5),
+                x, y, z, 1, 0, 0, 0, 0, true);
+        MagicManager.spawnParticles(level(), ParticleTypes.ELECTRIC_SPARK, x, y, z, 70, 0, 0, 0, 1, false);
     }
 
     @Override
@@ -73,7 +88,6 @@ public class SunlightLanceProjectile extends AbstractMagicProjectile {
         //irons_spellbooks.LOGGER.debug("Boom");
 
         if (!level().isClientSide) {
-            this.playSound(SoundRegistry.DIVINE_SMITE_CAST.get(), 6, .65f);
 //            irons_spellbooks.LOGGER.debug("{}",pos);
 //            //Beam
 //            for (int i = 0; i < 40; i++) {
@@ -86,8 +100,26 @@ public class SunlightLanceProjectile extends AbstractMagicProjectile {
 //                level.addParticle(ParticleHelper.ELECTRICITY, pos.x, pos.y, pos.z, 0,0,0);
 //            }
         }
-        super.onHit(pResult);
         this.discardHelper(pResult);
+        if (!this.level().isClientSide) {
+            impactParticles(xOld, yOld, zOld);
+            float explosionRadius = 5;
+            var explosionRadiusSqr = explosionRadius * explosionRadius;
+            var entities = level().getEntities(this, this.getBoundingBox().inflate(explosionRadius));
+            Vec3 losPoint = Utils.raycastForBlock(level(), this.position(), this.position().add(0, 2, 0), ClipContext.Fluid.NONE).getLocation();
+            for (Entity entity : entities) {
+                double distanceSqr = entity.distanceToSqr(pResult.getLocation());
+                if (distanceSqr < explosionRadiusSqr && canHitEntity(entity) && Utils.hasLineOfSight(level(), losPoint, entity.getBoundingBox().getCenter(), true)) {
+                    double p = (1 - distanceSqr / explosionRadiusSqr);
+                    float damage = (float) (this.damage * p);
+                    DamageSources.applyDamage(entity, damage, SarpySpellRegistry.SUNLIGHT_LANCE_SPELL.get().getDamageSource(this, getOwner()));
+                }
+            }
+            PacketDistributor.sendToPlayersTrackingEntity(this, new FieryExplosionParticlesPacket(pResult.getLocation().subtract(getDeltaMovement().scale(0.5)), getExplosionRadius()));
+            this.playSound(SoundRegistry.DIVINE_SMITE_CAST.get(), 4, .65f);
+        }
+        this.discardHelper(pResult);
+        super.onHit(pResult);
     }
 
     public int getAge() {

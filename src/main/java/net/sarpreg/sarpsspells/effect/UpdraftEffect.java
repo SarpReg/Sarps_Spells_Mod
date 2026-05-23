@@ -10,6 +10,7 @@ import io.redspace.ironsspellbooks.mixin.LivingEntityAccessor;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.particle.SparkParticleOptions;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -47,7 +48,9 @@ public class UpdraftEffect extends MagicMobEffect implements ISyncedMobEffect {
                 Vec3 random = Utils.getRandomVec3(.2);
                 level.addParticle(new SparkParticleOptions(new Vector3f(.85f, .85f, .85f)), livingEntity.getRandomX(0.75), y + Utils.getRandomScaled(0.75), livingEntity.getRandomZ(0.75), random.x, random.y, random.z);
             }
-            MagicManager.spawnParticles(level, ParticleHelper.FOG_CAMPFIRE_SMOKE, x, y, z, 2, .08, .08, .08, 0.3, false);
+
+            MagicManager.spawnParticles(level, ParticleTypes.ELECTRIC_SPARK, x, y, z, 70, 0, 0, 0, 1, false);
+            //MagicManager.spawnParticles(level, ParticleHelper.FOG_CAMPFIRE_SMOKE, x, y, z, 2, .08, .08, .08, 0.3, false);
             MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 3), x, y + .15f, z, 1, 0, 0, 0, 0, true);
             level.playSound(null, x, y, z, SoundEvents.GENERIC_EXPLODE, livingEntity.getSoundSource(), 2, 0.8f);
             livingEntity.removeEffect(this);
