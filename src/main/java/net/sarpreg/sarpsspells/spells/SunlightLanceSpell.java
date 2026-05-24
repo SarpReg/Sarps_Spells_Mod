@@ -7,16 +7,23 @@ import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.entity.spells.lightning_lance.LightningLanceProjectile;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
+import net.sarpreg.sarpsspells.util.AbstractAOW;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +36,7 @@ public class SunlightLanceSpell extends AbstractSpell {
         return List.of(
                 Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.radius", "5")
+                //Component.translatable("ui.sarps_spells.meleespell")
         );
     }
 
@@ -74,12 +82,14 @@ public class SunlightLanceSpell extends AbstractSpell {
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
+
         SunlightLanceProjectile lance = new SunlightLanceProjectile(level, entity);
         lance.setPos(entity.position().add(0, entity.getEyeHeight(), 0).add(entity.getForward()));
         lance.shoot(entity.getLookAngle());
         lance.setDamage(getSpellPower(spellLevel, entity));
         level.addFreshEntity(lance);
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
+
     }
 
     @Override
