@@ -110,9 +110,7 @@ public class SunlightLanceProjectile extends AbstractMagicProjectile {
             for (Entity entity : entities) {
                 double distanceSqr = entity.distanceToSqr(pResult.getLocation());
                 if (distanceSqr < explosionRadiusSqr && canHitEntity(entity) && Utils.hasLineOfSight(level(), losPoint, entity.getBoundingBox().getCenter(), true)) {
-                    double p = (1 - distanceSqr / explosionRadiusSqr);
-                    float damage = (float) (this.damage * p);
-                    DamageSources.applyDamage(entity, damage, SarpySpellRegistry.SUNLIGHT_LANCE_SPELL.get().getDamageSource(this, getOwner()));
+                    DamageSources.applyDamage(entity, this.damage, SarpySpellRegistry.SUNLIGHT_LANCE_SPELL.get().getDamageSource(this, getOwner()));
                 }
             }
             PacketDistributor.sendToPlayersTrackingEntity(this, new FieryExplosionParticlesPacket(pResult.getLocation().subtract(getDeltaMovement().scale(0.5)), getExplosionRadius()));

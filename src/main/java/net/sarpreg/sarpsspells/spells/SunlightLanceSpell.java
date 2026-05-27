@@ -49,7 +49,7 @@ public class SunlightLanceSpell extends AbstractSpell {
 
     public SunlightLanceSpell() {
         this.manaCostPerLevel = 30;
-        this.baseSpellPower = 7;
+        this.baseSpellPower = 5;
         this.spellPowerPerLevel = 1;
         this.castTime = 30;
         this.baseManaCost = 150;

@@ -1,58 +1,61 @@
 package net.sarpreg.sarpsspells.spells;
 
-import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
-import io.redspace.ironsspellbooks.api.spells.CastSource;
-import io.redspace.ironsspellbooks.api.spells.CastType;
-import io.redspace.ironsspellbooks.api.spells.SpellRarity;
+import io.redspace.ironsspellbooks.api.spells.*;
+import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.RaycastBuilder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
-import io.redspace.ironsspellbooks.util.Log;
-import io.redspace.ironsspellbooks.util.ModTags;
+import io.redspace.ironsspellbooks.entity.spells.fiery_dagger.FieryDaggerEntity;
+import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class LevitateSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "levitate");
+public class HolyDaggerRainSpell extends AbstractSpell {
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "holy_dagger_rain");
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
-                Component.translatable("ui.irons_spellbooks.effect_length", "1.5s", 1)
+                Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
+                Component.translatable("ui.irons_spellbooks.radius", "5")
+                //Component.translatable("ui.sarps_spells.meleespell")
         );
     }
 
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.RARE)
-            .setSchoolResource(SchoolRegistry.ENDER_RESOURCE)
-            .setMaxLevel(1)
-            .setCooldownSeconds(45)
+            .setSchoolResource(SchoolRegistry.HOLY_RESOURCE)
+            .setMaxLevel(5)
+            .setCooldownSeconds(13)
             .build();
 
-    public LevitateSpell() {
-        this.manaCostPerLevel = 3;
-        this.baseSpellPower = 5;
+    public HolyDaggerRainSpell() {
+        this.manaCostPerLevel = 30;
+        this.baseSpellPower = 7;
         this.spellPowerPerLevel = 1;
-        this.castTime = 20;
-        this.baseManaCost = 45;
+        this.castTime = 30;
+        this.baseManaCost = 150;
     }
 
     @Override
@@ -92,7 +95,36 @@ public class LevitateSpell extends AbstractSpell {
             LivingEntity target = castTargetingData.getTarget((ServerLevel) level);
 
             if (target != null) {
-                target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 13, false, false, true));
+                entity.playSound(SoundRegistry.FIERY_DAGGER_THROW.get(), 2f, Utils.random.nextIntBetweenInclusive(80, 110) * .01f);
+
+                Vec3 start = entity.getEyePosition();
+                Vec3 targetPos = target.position();
+                Vec3 deltaAim = targetPos.subtract(start);
+                // throw 3 daggers at 45 degree angles, centered around our target's postion
+                Vec3 aim = start.add(deltaAim.yRot(0));
+                int delay = Utils.random.nextIntBetweenInclusive(10, 40);
+
+                FieryDaggerEntity dagger = new FieryDaggerEntity(level);
+                dagger.setOwner(entity);
+                dagger.setPos(start);
+                dagger.delay = delay;
+                dagger.setDamage((float) (entity.getAttributeValue(Attributes.ATTACK_DAMAGE) * .75));
+                dagger.setExplosionRadius(4 + Utils.random.nextFloat() * 2);
+                dagger.setNoGravity(false);
+
+                Vec3 horizontal = aim.subtract(start).multiply(1, 0, 1);
+                double horizontalSpeed = 1 * Mth.cos(Mth.PI * .25f) + 0.5; // + 0.5 for extra oomph
+                double distance = horizontal.length();
+                double ticks = distance / horizontalSpeed;
+
+                // y(t) = -1/2(g)(t^2) + v0*t
+                // => v0 = [y1 + 1/2(g)(t1^2)]/t1
+                double y1 = aim.y - start.y;
+                double g = 0.05;//dagger.getGravity();
+                double verticalSpeed = (y1 + 0.5 * g * ticks * ticks) / ticks;
+                Vec3 trajectory = horizontal.normalize().scale(horizontalSpeed).add(0, verticalSpeed, 0);
+                dagger.setDeltaMovement(trajectory);
+                level.addFreshEntity(dagger);
             }
         }
 
@@ -116,5 +148,4 @@ public class LevitateSpell extends AbstractSpell {
     public int getDuration(int spellLevel, LivingEntity caster) {
         return 30;
     }
-
 }

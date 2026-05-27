@@ -7,6 +7,8 @@
   "spell.sarps_spells.emerging_tentacles.guide": "Make tentacles of sculk come out of the ground, damaging anyone below them.",
   "spell.sarps_spells.sunlight_lance": "Sunlight Lance",
   "spell.sarps_spells.sunlight_lance.guide": "Hold to charge a lance made of sunlight. Release to throw it, dealing high damage to a an area.",
+  "spell.sarps_spells.holy_dagger_rain": "Holy Dagger Rain",
+  "spell.sarps_spells.holy_dagger_rain.guide": "Summon holy daggers around the target, dealing continuous damage to an area.",
 
   "entity.sarps_spells.sunlight_lance": "Sunlight Lance",
 
