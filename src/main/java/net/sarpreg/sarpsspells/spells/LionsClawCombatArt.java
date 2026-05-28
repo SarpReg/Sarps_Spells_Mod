@@ -17,6 +17,7 @@ import io.redspace.ironsspellbooks.particle.FlameStrikeParticleOptions;
 import io.redspace.ironsspellbooks.particle.ZapParticleOption;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.particle.MeleeStrikeParticleOptions;
 import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
 import net.sarpreg.sarpsspells.util.AbstractAOW;
 import net.sarpreg.sarpsspells.util.SarpSpellAnims;
@@ -106,14 +108,23 @@ public class LionsClawCombatArt extends AbstractAOW {
                 Vec3 offsetVector = targetEntity.getBoundingBox().getCenter().subtract(entity.getEyePosition());
                 if (offsetVector.dot(forward) >= 0) {
                     if (DamageSources.applyDamage(targetEntity, getDamage(spellLevel, entity), damageSource)) {
-                        MagicManager.spawnParticles(level, ParticleHelper.FIRE, targetEntity.getX(), targetEntity.getY() + targetEntity.getBbHeight() * .5f, targetEntity.getZ(), 30, targetEntity.getBbWidth() * .5f, targetEntity.getBbHeight() * .5f, targetEntity.getBbWidth() * .5f, .03, false);
+                        MagicManager.spawnParticles(level, ParticleTypes.POOF, targetEntity.getX(), targetEntity.getY() + targetEntity.getBbHeight() * .5f, targetEntity.getZ(), 30, targetEntity.getBbWidth() * .5f, targetEntity.getBbHeight() * .5f, targetEntity.getBbWidth() * .5f, .03, false);
                         EnchantmentHelper.doPostDamageEffects(entity, targetEntity);
                     }
                 }
             }
         }
         boolean mirrored = playerMagicData.getCastingEquipmentSlot().equals(SpellSelectionManager.OFFHAND);
-        MagicManager.spawnParticles(level, new FlameStrikeParticleOptions((float) forward.x, (float) forward.y, (float) forward.z, mirrored, true, 1f), hitLocation.x, hitLocation.y + .5, hitLocation.z, 1, 0, 0, 0, 0, true);
+        MagicManager.spawnParticles(level, new MeleeStrikeParticleOptions((float) forward.x, (float) forward.y, (float) forward.z, mirrored, true, 1f), hitLocation.x, hitLocation.y + .5, hitLocation.z, 1, 0, 0, 0, 0, true);
+
+
+        var x = entity.getX();
+        var y = entity.getY();
+        var z = entity.getZ();
+
+
+        MagicManager.spawnParticles(level, ParticleTypes.POOF, x, y, z, 30, 0, 0, 0, 1, false);
+        MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 5), x, y - 0.8f, z, 1, 0, 0, 0, 0, true);
 
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }

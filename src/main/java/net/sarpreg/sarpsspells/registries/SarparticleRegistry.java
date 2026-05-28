@@ -10,6 +10,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.particle.MeleeStrikeParticleOptions;
 
 import java.util.function.Supplier;
 
@@ -31,5 +32,10 @@ public class SarparticleRegistry {
      */
 
     public static final Supplier<SimpleParticleType> SUNSPARK_PARTICLE = PARTICLE_TYPES.register("sunspark", () -> new SimpleParticleType(false));
+    public static final Supplier<ParticleType<MeleeStrikeParticleOptions>> MELEE_STRIKE_PARTICLE = PARTICLE_TYPES.register("melee_strike", () -> new ParticleType<>(true, MeleeStrikeParticleOptions.DESERIALIZER) {
+        public Codec<MeleeStrikeParticleOptions> codec() {
+            return MeleeStrikeParticleOptions.CODEC;
+        }
+    });
 
 }
