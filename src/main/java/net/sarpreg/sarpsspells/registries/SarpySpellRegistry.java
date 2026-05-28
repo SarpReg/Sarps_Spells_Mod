@@ -27,4 +27,8 @@ public class SarpySpellRegistry {
     //public static final Supplier<AbstractSpell> EMERGING_TENTACLES_SPELL = registerSpell(new EmergingTentaclesSpell());
     public static final Supplier<AbstractSpell> SUNLIGHT_LANCE_SPELL = registerSpell(new SunlightLanceSpell());
     public static final Supplier<AbstractSpell> HOLY_DAGGER_RAIN_SPELL = registerSpell(new HolyDaggerRainSpell());
+
+
+
+    public static final Supplier<AbstractSpell> LIONS_CLAW_COMBAT_ART = registerSpell(new LionsClawCombatArt());
 }

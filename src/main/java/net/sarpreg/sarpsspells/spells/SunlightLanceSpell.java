@@ -36,7 +36,6 @@ public class SunlightLanceSpell extends AbstractSpell {
         return List.of(
                 Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.radius", "5")
-                //Component.translatable("ui.sarps_spells.meleespell")
         );
     }
 

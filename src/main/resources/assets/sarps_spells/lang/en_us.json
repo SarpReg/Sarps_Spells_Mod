@@ -13,10 +13,11 @@
   "entity.sarps_spells.sunlight_lance": "Sunlight Lance",
 
   "school.sarps_spells.sculk": "Sculk",
+  "school.sarps_spells.combatart": "Combat Art",
 
   "effect.sarps_spells.updraft": "Updraft",
 
   "ui.sarps_spells.tentaclecount": "${getCount(spellLevel, caster)} Tentacles",
   "ui.sarps_spells.aow": "This spell is only castable when imbued to an item.",
-  "ui.sarps_spells.meleespell": "Imbue Only."
+  "ui.sarps_spells.meleespell": "Imbue Only"
 }

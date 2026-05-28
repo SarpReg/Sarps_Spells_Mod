@@ -22,8 +22,10 @@ public class SarpttributeRegistry {
     }
 
     public static final RegistryObject<Attribute> SCULK_MAGIC_RESIST = newResistanceAttribute("sculk");
+    public static final RegistryObject<Attribute> COMBATART_MAGIC_RESIST = newResistanceAttribute("combatart");
 
     public static final RegistryObject<Attribute> SCULK_SPELL_POWER = newPowerAttribute("sculk");
+    public static final RegistryObject<Attribute> COMBATART_SPELL_POWER = newPowerAttribute("combatart");
 
     @SubscribeEvent
     public static void modifyEntityAttributes(EntityAttributeModificationEvent e) {

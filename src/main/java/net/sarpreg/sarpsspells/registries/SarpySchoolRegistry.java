@@ -10,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -54,6 +56,18 @@ public class SarpySchoolRegistry {
             ISSDamageTypes.ELDRITCH_MAGIC
     ));
 
+    public static final ResourceLocation COMBATART_RESOURCE = IronsSpellbooks.id("combatart");
+
+    public static final RegistryObject<SchoolType> COMBATART = registerSchool(new SchoolType(
+            COMBATART_RESOURCE,
+            ItemTags.SWORDS,
+            Component.translatable("school.sarps_spells.combatart").withStyle(Style.EMPTY.withColor(0x858585)),
+            SarpttributeRegistry.COMBATART_SPELL_POWER,
+            SarpttributeRegistry.COMBATART_MAGIC_RESIST,
+            SoundRegistry.SOULCALLER_TOLL_FAILURE,
+            DamageTypes.PLAYER_ATTACK
+    ));
+
     @Nullable
     public static SchoolType getSchoolFromFocus(ItemStack focusStack) {
         for (SchoolType school : REGISTRY.get()) {
@@ -67,4 +81,6 @@ public class SarpySchoolRegistry {
     public static List<SchoolType> getSchoolsFromFocus(ItemStack focusStack) {
         return REGISTRY.get().getValues().stream().filter(school -> school.isFocus(focusStack)).toList();
     }
+
+
 }
