@@ -1,5 +1,6 @@
 package net.sarpreg.sarpsspells.registries;
 
+import com.eliotlash.mclib.math.functions.classic.Abs;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,6 +28,7 @@ public class SarpySpellRegistry {
     //public static final Supplier<AbstractSpell> EMERGING_TENTACLES_SPELL = registerSpell(new EmergingTentaclesSpell());
     public static final Supplier<AbstractSpell> SUNLIGHT_LANCE_SPELL = registerSpell(new SunlightLanceSpell());
     public static final Supplier<AbstractSpell> HOLY_DAGGER_RAIN_SPELL = registerSpell(new HolyDaggerRainSpell());
+    public static final Supplier<AbstractSpell> LASER_EYES_SPELL = registerSpell(new LaserEyesSpell());
 
 
 
