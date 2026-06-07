@@ -4,7 +4,6 @@ import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
-import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.RaycastBuilder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
@@ -17,21 +16,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
-import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class HolyDaggerRainSpell extends AbstractSpell {
+public class OldHolyDaggerRainSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "holy_dagger_rain");
 
     @Override
@@ -50,7 +46,7 @@ public class HolyDaggerRainSpell extends AbstractSpell {
             .setCooldownSeconds(13)
             .build();
 
-    public HolyDaggerRainSpell() {
+    public OldHolyDaggerRainSpell() {
         this.manaCostPerLevel = 30;
         this.baseSpellPower = 7;
         this.spellPowerPerLevel = 1;

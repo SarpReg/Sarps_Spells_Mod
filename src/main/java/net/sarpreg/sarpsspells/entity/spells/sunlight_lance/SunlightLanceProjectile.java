@@ -47,9 +47,6 @@ public class SunlightLanceProjectile extends AbstractMagicProjectile {
     public void impactParticles(double x, double y, double z) {
         MagicManager.spawnParticles(level(), SarparticleHelper.SUNSPARK, x, y, z, 75, .1, .1, .1, 2, true);
         MagicManager.spawnParticles(level(), SarparticleHelper.SUNSPARK, x, y, z, 75, .1, .1, .1, .5, false);
-        MagicManager.spawnParticles(level(), new BlastwaveParticleOptions(SchoolRegistry.HOLY.get().getTargetingColor(), 5),
-                x, y, z, 1, 0, 0, 0, 0, true);
-        MagicManager.spawnParticles(level(), ParticleTypes.ELECTRIC_SPARK, x, y, z, 70, 0, 0, 0, 1, false);
     }
 
     @Override
@@ -115,6 +112,9 @@ public class SunlightLanceProjectile extends AbstractMagicProjectile {
             }
             PacketDistributor.sendToPlayersTrackingEntity(this, new FieryExplosionParticlesPacket(pResult.getLocation().subtract(getDeltaMovement().scale(0.5)), getExplosionRadius()));
             this.playSound(SoundRegistry.DIVINE_SMITE_CAST.get(), 4, .65f);
+            MagicManager.spawnParticles(level(), new BlastwaveParticleOptions(SchoolRegistry.HOLY.get().getTargetingColor(), 5),
+                    xOld, yOld, zOld, 1, 0, 0, 0, 0, true);
+            MagicManager.spawnParticles(level(), ParticleTypes.ELECTRIC_SPARK, xOld, yOld, zOld, 70, 0, 0, 0, 1, false);
         }
         this.discardHelper(pResult);
         super.onHit(pResult);

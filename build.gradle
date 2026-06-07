@@ -140,12 +140,12 @@ repositories {
         name "KosmX's maven"
         url 'https://maven.kosmx.dev/'
     }
-    repositories {
-        maven {
-            name = "Illusive Soulworks maven"
-            url = "https://maven.theillusivec4.top/"
-        }
+    maven {
+        name = "Illusive Soulworks maven"
+        url = "https://maven.theillusivec4.top/"
     }
+    maven { url 'https://api.modrinth.com/maven' }
+    maven { url "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -161,6 +161,8 @@ dependencies {
     implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${playeranimator_version}")
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    implementation fg.deobf('maven.modrinth:better-combat:1.9.0+1.20.1-forge')
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.136")
 
 }
 

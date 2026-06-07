@@ -239,6 +239,7 @@ public class SClientSetup {
     @SubscribeEvent
     public static void rendererRegister(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegistry.SUNLIGHT_LANCE_PROJECTILE.get(), SunlightLanceRenderer::new);
+        event.registerEntityRenderer(io.redspace.ironsspellbooks.registries.EntityRegistry.THROWN_SPEAR.get(), ThrownSpearRenderer::new);
 
     }
 

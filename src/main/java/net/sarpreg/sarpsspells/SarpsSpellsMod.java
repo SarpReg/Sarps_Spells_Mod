@@ -14,6 +14,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.sarpreg.sarpsspells.registries.*;
+import net.sarpreg.sarpsspells.setup.SModSetup;
+import net.sarpreg.sarpsspells.setup.SPacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -28,6 +30,7 @@ public class SarpsSpellsMod
 
     public SarpsSpellsMod(FMLJavaModLoadingContext context)
     {
+        SModSetup.setup();
         IEventBus modEventBus = context.getModEventBus();
 
         // Register the commonSetup method for modloading

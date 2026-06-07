@@ -25,6 +25,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.setup.SPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -111,7 +112,7 @@ public class LaserEyesSpell extends AbstractSpell {
             Entity target = ((EntityHitResult) hitResult).getEntity();
             if (target.canBeHitByProjectile()) {
                 if (DamageSources.applyDamage(target, getTickDamage(spellLevel, entity), getDamageSource(entity))) {
-                    PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new BloodSiphonParticlesPacket(target.position().add(0, target.getBbHeight() / 2, 0), entity.position().add(0, entity.getBbHeight() / 2, 0)));
+                    SPacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new BloodSiphonParticlesPacket(target.position().add(0, target.getBbHeight() / 2, 0), entity.position().add(0, entity.getBbHeight() / 2, 0)));
                 }
             }
         }

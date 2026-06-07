@@ -94,7 +94,7 @@ public class UpdraftEffect extends MagicMobEffect implements ISyncedMobEffect {
 
     @Override
     public void clientTick(LivingEntity entity, MobEffectInstance instance) {
-       /* var level = entity.level();
+        /* var level = entity.level();
         for (int i = 0; i < 4; i++) {
             Vec3 random = Utils.getRandomVec3(.2);
             level.addParticle(ParticleHelper.SNOW_DUST, entity.getRandomX(0.75), entity.getY() + Utils.getRandomScaled(0.75), entity.getRandomZ(0.75), random.x, random.y, random.z);
