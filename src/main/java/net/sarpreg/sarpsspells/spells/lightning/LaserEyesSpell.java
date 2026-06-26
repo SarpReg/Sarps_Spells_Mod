@@ -1,6 +1,5 @@
-package net.sarpreg.sarpsspells.spells;
+package net.sarpreg.sarpsspells.spells.lightning;
 
-import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
@@ -11,7 +10,6 @@ import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.network.particles.BloodSiphonParticlesPacket;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import io.redspace.ironsspellbooks.spells.CastingMobAimingData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

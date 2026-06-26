@@ -13,7 +13,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
-import net.sarpreg.sarpsspells.entity.spells.sculk_tendril.SculkTendril;
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
 
 
@@ -29,11 +28,5 @@ public class EntityRegistry {
                     .sized(1.25f, 1.25f)
                     .clientTrackingRange(64)
                     .build(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "sunlight_lance").toString()));
-
-    public static final RegistryObject<EntityType<SculkTendril>> SCULK_TENDRIL =
-            ENTITIES.register("sculk_tendril", () -> EntityType.Builder.<SculkTendril>of(SculkTendril::new, MobCategory.MISC)
-                    .sized(1f, 1f)
-                    .clientTrackingRange(64)
-                    .build(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "sculk_tendril").toString()));
 }
 
