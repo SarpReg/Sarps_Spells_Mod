@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.effect.AscendanceEffect;
 import net.sarpreg.sarpsspells.effect.SnowgraveCastEffect;
 import net.sarpreg.sarpsspells.effect.UpdraftEffect;
 
@@ -19,4 +20,5 @@ public class SarpMobEffectRegistry {
     }
     public static final RegistryObject<MobEffect> UPDRAFT = MOB_EFFECT_DEFERRED_REGISTER.register("updraft", () -> new UpdraftEffect(MobEffectCategory.BENEFICIAL, 0xecf0ef));
     public static final RegistryObject<MobEffect> SNOWGRAVE_CAST = MOB_EFFECT_DEFERRED_REGISTER.register("snowgrave_cast", () -> new SnowgraveCastEffect(MobEffectCategory.NEUTRAL, 0xffffff));
+    public static final RegistryObject<MobEffect> ASCENDANCE = MOB_EFFECT_DEFERRED_REGISTER.register("ascendance", () -> new AscendanceEffect(MobEffectCategory.BENEFICIAL, 0xffffff));
 }

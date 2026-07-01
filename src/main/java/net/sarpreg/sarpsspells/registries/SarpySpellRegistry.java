@@ -32,8 +32,8 @@ public class SarpySpellRegistry {
     public static final Supplier<AbstractSpell> LEVITATE_SPELL = registerSpell(new LevitateSpell());
     //public static final Supplier<AbstractSpell> EMERGING_TENTACLES_SPELL = registerSpell(new EmergingTentaclesSpell());
     public static final Supplier<AbstractSpell> SUNLIGHT_LANCE_SPELL = registerSpell(new SunlightLanceSpell());
-    public static final Supplier<AbstractSpell> HOLY_DAGGER_RAIN_SPELL = registerSpell(new OldHolyDaggerRainSpell());
-    public static final Supplier<AbstractSpell> LASER_EYES_SPELL = registerSpell(new LaserEyesSpell());
+    //public static final Supplier<AbstractSpell> HOLY_DAGGER_RAIN_SPELL = registerSpell(new OldHolyDaggerRainSpell());
+    //public static final Supplier<AbstractSpell> LASER_EYES_SPELL = registerSpell(new LaserEyesSpell());
     public static final Supplier<AbstractSpell> SNOWGRAVE_SPELL = registerSpell(new SnowgraveSpell());
 
     // ASH OF WAR REGISTRY BELOW

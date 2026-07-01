@@ -23,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import org.jetbrains.annotations.Nullable;
+import io.redspace.ironsspellbooks.IronsSpellbooks;
 
 import java.util.List;
 import java.util.Optional;

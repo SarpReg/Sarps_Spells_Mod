@@ -119,6 +119,7 @@ import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProject
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceRenderer;
 import net.sarpreg.sarpsspells.particle.SunsparkParticle;
 import net.sarpreg.sarpsspells.registries.EntityRegistry;
+import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import net.sarpreg.sarpsspells.registries.SarparticleRegistry;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
@@ -128,6 +129,8 @@ import java.util.function.BiFunction;
 
 import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.CHARGE_TEXTURE;
 import static io.redspace.ironsspellbooks.render.EnergySwirlLayer.EVASION_TEXTURE;
+
+import static net.sarpreg.sarpsspells.effect.AscendanceEffect.ASCENDANCE_TEXTURE;
 
 @EventBusSubscriber(modid = SarpsSpellsMod.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class SClientSetup {
@@ -215,16 +218,10 @@ public class SClientSetup {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private static void addLayerToPlayerSkin(EntityRenderersEvent.AddLayers event, String skinName) {
-        /*EntityRenderer<? extends Player> render = event.getSkin(skinName);
+        EntityRenderer<? extends Player> render = event.getSkin(skinName);
         if (render instanceof LivingEntityRenderer livingRenderer) {
-            livingRenderer.addLayer(new AngelWingsLayer<>(livingRenderer));
-            livingRenderer.addLayer(new ArmorCapeLayer(livingRenderer));
-            livingRenderer.addLayer(new EnergySwirlLayer.Vanilla(livingRenderer, EVASION_TEXTURE, MobEffectRegistry.EVASION));
-            livingRenderer.addLayer(new EnergySwirlLayer.Vanilla(livingRenderer, CHARGE_TEXTURE, MobEffectRegistry.CHARGED));
-            livingRenderer.addLayer(new ChargeSpellLayer.Vanilla<>(livingRenderer));
-            livingRenderer.addLayer(new GlowingEyesLayer.Vanilla<>(livingRenderer));
-            livingRenderer.addLayer(new SpellTargetingLayer.Vanilla<>(livingRenderer));
-        }*/
+            livingRenderer.addLayer(new EnergySwirlLayer.Vanilla(livingRenderer, ASCENDANCE_TEXTURE, SarpMobEffectRegistry.ASCENDANCE));
+        }
 
 
     /*.valu((entityType)->{
