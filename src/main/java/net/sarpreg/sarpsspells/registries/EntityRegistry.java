@@ -13,6 +13,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.entity.spells.sunburst.SunburstAoe;
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
 
 

@@ -121,6 +121,7 @@ import net.sarpreg.sarpsspells.particle.SunsparkParticle;
 import net.sarpreg.sarpsspells.registries.EntityRegistry;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import net.sarpreg.sarpsspells.registries.SarparticleRegistry;
+import net.sarpreg.sarpsspells.render.SChargeSpellLayer;
 import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
@@ -221,6 +222,7 @@ public class SClientSetup {
         EntityRenderer<? extends Player> render = event.getSkin(skinName);
         if (render instanceof LivingEntityRenderer livingRenderer) {
             livingRenderer.addLayer(new EnergySwirlLayer.Vanilla(livingRenderer, ASCENDANCE_TEXTURE, SarpMobEffectRegistry.ASCENDANCE));
+            livingRenderer.addLayer(new SChargeSpellLayer.Vanilla<>(livingRenderer));
         }
 
 
