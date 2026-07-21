@@ -30,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.entity.spells.sunburst.SunburstAoe;
+import net.sarpreg.sarpsspells.util.SarparticleHelper;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -115,6 +116,8 @@ public class SunburstSpell extends AbstractSpell {
         aoe.setOwner(entity);
         aoe.moveTo(hitLocation);
         level.addFreshEntity(aoe);
+        MagicManager.spawnParticles(level, SarparticleHelper.SUNSPARK, entity.getX(), entity.getY(), entity.getZ(), 50, .1, 0, .1, 2, true);
+        MagicManager.spawnParticles(level, SarparticleHelper.SUNSPARK, entity.getX(), entity.getY(), entity.getZ(), 65, .1, 0, .1, .5, false);
         CameraShakeManager.addCameraShake(new CameraShakeData(level, 20 + (int) radius, hitLocation, radius * 2 + 5));
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
@@ -128,7 +131,7 @@ public class SunburstSpell extends AbstractSpell {
     }
 
     public float getDamage(int spellLevel, LivingEntity caster) {
-        return 4 + (getSpellPower(spellLevel, caster) * .75f);
+        return 5 + (getSpellPower(spellLevel, caster) * .4f);
     }
 
     @Override

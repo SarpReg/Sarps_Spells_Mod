@@ -52,59 +52,6 @@ public class SunburstAoe extends FireEruptionAoe {
     public void tick() {
         var radius = this.getRadius();
         var level = this.level();
-        if (waveAnim++ < radius) {
-            if (!level.isClientSide) {
-                if (waveAnim % 2 == 0) {
-                    float volume = (waveAnim + 8) / 16f;
-                    this.playSound(SoundRegistry.EARTHQUAKE_IMPACT.get(), volume, Utils.random.nextIntBetweenInclusive(90, 110) * .01f);
-                }
-                var circumferenceMin = (waveAnim - 1) * 2 * 3.14f;
-                var circumferenceMax = (waveAnim + 1) * 2 * 3.14f;
-                int minBlocks = Mth.clamp((int) circumferenceMin, 0, 250);
-                int maxBlocks = Mth.clamp((int) circumferenceMax, 0, 250);
-                float anglePerBlockMin = 360f / minBlocks;
-                float anglePerBlockMax = 360f / maxBlocks;
-                //block trail
-                for (int i = 0; i < minBlocks; i++) {
-                    Vec3 vec3 = new Vec3(
-                            waveAnim * Mth.cos(anglePerBlockMin * i),
-                            0,
-                            waveAnim * Mth.sin(anglePerBlockMin * i)
-                    );
-                    BlockPos blockPos = BlockPos.containing(Utils.moveToRelativeGroundLevel(level, position().add(vec3), 4)).below();
-                    Utils.createTremorBlock(level, blockPos, .1f + random.nextFloat() * .2f);
-                }
-                //fire trail
-                List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(this.getInflation().x, this.getInflation().y, this.getInflation().z));
-                var r1Sqr = waveAnim * waveAnim;
-                var r2Sqr = (waveAnim + 1) * (waveAnim + 1);
-                for (LivingEntity target : targets) {
-                    var distanceSqr = target.distanceToSqr(this);
-                    if (canHitEntity(target) && distanceSqr >= r1Sqr && distanceSqr <= r2Sqr) {
-                        if (canHitTargetForGroundContext(target)) {
-                            applyEffect(target);
-                        }
-                    }
-                }
-            } else {
-                // fire particles
-                int particles = (int) ((waveAnim + 1) * 2 * 3.14f * 2.5f);
-                float anglePerParticle = Mth.TWO_PI / particles;
-                for (int i = 0; i < particles; i++) {
-                    Vec3 trig = new Vec3(
-                        Mth.cos(anglePerParticle * i),
-                        0,
-                        Mth.sin(anglePerParticle * i)
-                    );
-                    float r = Mth.lerp(Utils.random.nextFloat(), waveAnim, waveAnim + 1);
-                    Vec3 pos = trig.scale(r).add(Utils.getRandomVec3(0.4)).add(this.position()).add(0, 0.5, 0);
-                    Vec3 motion = trig.add(Utils.getRandomVec3(0.5)).scale(0.1);
-                    level.addParticle(ParticleHelper.FOG_THUNDER_DARK, pos.x, pos.y, pos.z, motion.x, motion.y, motion.z);
-                }
-            }
-        } else {
-            this.discard();
-        }
 
     }
 
