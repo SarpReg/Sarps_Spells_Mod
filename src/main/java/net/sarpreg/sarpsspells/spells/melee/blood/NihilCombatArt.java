@@ -55,7 +55,7 @@ public class NihilCombatArt extends AbstractAOW {
         this.manaCostPerLevel = 10000;
         this.baseSpellPower = 1;
         this.spellPowerPerLevel = 1;
-        this.castTime = 20;
+        this.castTime = 23;
         this.baseManaCost = 200;
     }
 
