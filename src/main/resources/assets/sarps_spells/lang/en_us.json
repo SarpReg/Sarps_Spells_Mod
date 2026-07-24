@@ -26,5 +26,7 @@
 
   "ui.sarps_spells.tentaclecount": "${getCount(spellLevel, caster)} Tentacles",
   "ui.sarps_spells.aow": "This spell is only castable when imbued to an item.",
-  "ui.sarps_spells.meleespell": "Imbue Only"
+  "ui.sarps_spells.meleespell": "Imbue Only",
+
+  "item.sarps_spells.sanguine_halberd": "Sanguine Trident"
 }

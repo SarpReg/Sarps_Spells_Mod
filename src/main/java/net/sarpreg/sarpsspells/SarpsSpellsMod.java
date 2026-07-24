@@ -44,6 +44,7 @@ public class SarpsSpellsMod
         SarpttributeRegistry.register(modEventBus);
         SarpySchoolRegistry.register(modEventBus);
         EntityRegistry.register(modEventBus);
+        SarpItemRegistry.register(modEventBus);
         SarparticleRegistry.register(modEventBus);
 
 

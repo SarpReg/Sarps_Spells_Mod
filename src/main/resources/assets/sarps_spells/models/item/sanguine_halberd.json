@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "sarps_spells:item/sanguine_trident_handheld"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/handheld",
+      "textures": {
+        "layer0": "sarps_spells:item/sanguine_trident_gui"
+      }
+    }
+  }
+}

@@ -108,6 +108,7 @@ public class SunburstSpell extends AbstractSpell {
                 MagicManager.spawnParticles(level, ParticleHelper.CLEANSE_PARTICLE, livingEntity.getX(), livingEntity.getY() + livingEntity.getBbHeight() / 2, livingEntity.getZ(), 40, livingEntity.getBbWidth() / 3, livingEntity.getBbHeight() / 3, livingEntity.getBbWidth() / 3, 0.1, false);
                 MagicManager.spawnParticles(level, ParticleHelper.FIRE, livingEntity.getX(), livingEntity.getY() + livingEntity.getBbHeight() / 2, livingEntity.getZ(), 5, livingEntity.getBbWidth() / 3, livingEntity.getBbHeight() / 3, livingEntity.getBbWidth() / 3, 0.1, false);
                 DamageSources.applyDamage(target, damage, getDamageSource(entity));
+                target.setSecondsOnFire(5);
             }
         });
         float range = 1.7f;
