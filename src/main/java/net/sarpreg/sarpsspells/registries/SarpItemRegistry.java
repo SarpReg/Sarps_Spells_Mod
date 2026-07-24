@@ -36,6 +36,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.item.weapons.SanguineTridentItem;
 import net.sarpreg.sarpsspells.item.weapons.SarpExtendedWeaponTier;
 
 import java.util.Collection;
@@ -54,7 +55,7 @@ public class SarpItemRegistry {
      * Spell items
      */
 
-    public static final RegistryObject<Item> SANGUINE_TRIDENT = ITEMS.register("sanguine_halberd", () -> new MagicSwordItem(SarpExtendedWeaponTier.SANGUINE_TRIDENT, ItemPropertiesHelper.equipment().rarity(Rarity.EPIC)/*.attributes(ExtendedSwordItem.createAttributes(ExtendedWeaponTier.SPELLBREAKER))*/, SpellDataRegistryHolder.of(new SpellDataRegistryHolder((RegistryObject<AbstractSpell>) SarpySpellRegistry.SUNBURST_SPELL, 1))));
+    public static final RegistryObject<Item> SANGUINE_TRIDENT = ITEMS.register("sanguine_halberd", () -> new SanguineTridentItem(SarpExtendedWeaponTier.SANGUINE_TRIDENT, ItemPropertiesHelper.equipment().rarity(Rarity.EPIC)/*.attributes(ExtendedSwordItem.createAttributes(ExtendedWeaponTier.SPELLBREAKER))*/, SpellDataRegistryHolder.of(new SpellDataRegistryHolder((RegistryObject<AbstractSpell>) SarpySpellRegistry.NIHIL_COMBAT_ART, 1))));
 
 
     public static Collection<RegistryObject<Item>> getSarpsItems() {

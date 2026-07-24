@@ -10,6 +10,7 @@ import net.sarpreg.sarpsspells.spells.holy.SunburstSpell;
 import net.sarpreg.sarpsspells.spells.holy.SunlightLanceSpell;
 import net.sarpreg.sarpsspells.spells.ice.SnowgraveSpell;
 import net.sarpreg.sarpsspells.spells.melee.basic.LionsClawCombatArt;
+import net.sarpreg.sarpsspells.spells.melee.blood.NihilCombatArt;
 
 import java.util.function.Supplier;
 
@@ -38,4 +39,5 @@ public class SarpySpellRegistry {
     // ASH OF WAR REGISTRY BELOW
 
     public static final Supplier<AbstractSpell> LIONS_CLAW_COMBAT_ART = registerSpell(new LionsClawCombatArt());
+    public static final Supplier<AbstractSpell> NIHIL_COMBAT_ART = registerSpell(new NihilCombatArt());
 }

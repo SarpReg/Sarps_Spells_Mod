@@ -28,5 +28,6 @@
   "ui.sarps_spells.aow": "This spell is only castable when imbued to an item.",
   "ui.sarps_spells.meleespell": "Imbue Only",
 
-  "item.sarps_spells.sanguine_halberd": "Sanguine Trident"
+  "item.sarps_spells.sanguine_halberd.desc": "Dealing Blood Spell Damage adds a stack of Occult Mark to the creature up to 3 stacks.",
+  "item.sarps_spells.sanguine_halberd.occult_mark.desc": "Casting Nihil in the vicinity of a marked entity will deal damage based on the amount of marks on them."
 }

@@ -93,6 +93,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.sarpreg.sarpsspells.effect.AscendanceEffect;
+import net.sarpreg.sarpsspells.effect.OccultMarkEffect;
+import net.sarpreg.sarpsspells.registries.SarpItemRegistry;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
@@ -130,6 +132,19 @@ public class SarpServerPlayerEvents {
                         event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
                     }
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBeforeDamageTaken(LivingDamageEvent event) {
+        var livingEntity = event.getEntity();
+        if (event.getSource().is(ISSDamageTypes.BLOOD_MAGIC) && event.getSource().getEntity() instanceof LivingEntity livingAttacker) {
+            if (livingAttacker.getItemBySlot(EquipmentSlot.MAINHAND).is(SarpItemRegistry.SANGUINE_TRIDENT.get()) && (!(livingAttacker instanceof Player player) || !player.getCooldowns().isOnCooldown(SarpItemRegistry.SANGUINE_TRIDENT.get()))) {
+                OccultMarkEffect.addOccultMarkStack(livingEntity, livingAttacker);
+//                if (livingAttacker instanceof Player player) {
+//                    player.getCooldowns().addCooldown(ItemRegistry.INFERNAL_SORCERER_CHESTPLATE.get(), Utils.applyCooldownReduction(InfernalSorcererArmorItem.COOLDOWN_TICKS, player));
+//                }
             }
         }
     }

@@ -10,6 +10,8 @@ public class SarpSpellAnims {
 
     public static final AnimationHolder ANIMATION_LIONS_CLAW = new AnimationHolder(SarpsSpellsMod.id("lionsclaw"), true);
     public static final AnimationHolder ANIMATION_LIONS_CLAW_END = new AnimationHolder(SarpsSpellsMod.id("lionsclaw_end"), true);
+    public static final AnimationHolder ANIMATION_NIHIL_PREPARE = new AnimationHolder(SarpsSpellsMod.id("nihil_prepare"), true);
+    public static final AnimationHolder ANIMATION_NIHIL_CAST = new AnimationHolder(SarpsSpellsMod.id("nihil_cast"), true);
 
 
 }
