@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import net.sarpreg.sarpsspells.spells.ender.WideStarfallSpell;
 import net.sarpreg.sarpsspells.spells.evocation.UpdraftSpell;
 import net.sarpreg.sarpsspells.spells.holy.SunburstSpell;
 import net.sarpreg.sarpsspells.spells.holy.SunlightLanceSpell;
@@ -35,6 +36,7 @@ public class SarpySpellRegistry {
     //public static final Supplier<AbstractSpell> LASER_EYES_SPELL = registerSpell(new LaserEyesSpell());
     public static final Supplier<AbstractSpell> SNOWGRAVE_SPELL = registerSpell(new SnowgraveSpell());
     public static final Supplier<AbstractSpell> SUNBURST_SPELL = registerSpell(new SunburstSpell());
+    public static final Supplier<AbstractSpell> WIDESTARFALL_SPELL = registerSpell(new WideStarfallSpell());
 
     // ASH OF WAR REGISTRY BELOW
 

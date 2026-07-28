@@ -38,4 +38,6 @@ public class SarparticleRegistry {
         }
     });
 
+    public static final Supplier<SimpleParticleType> STARFALL_SMOKE_PARTICLE = PARTICLE_TYPES.register("starfall_smoke", () -> new SimpleParticleType(true));
+
 }

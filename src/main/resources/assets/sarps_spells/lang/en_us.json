@@ -13,6 +13,8 @@
   "spell.sarps_spells.snowgrave.guide": "200% TP",
   "spell.sarps_spells.sunburst": "Solar Burst",
   "spell.sarps_spells.sunburst.guide": "Charge holy magic within yourself and unleash it in a shockwave of divine wrath, scorching exposed creatures.",
+  "spell.sarps_spells.nihil": "Nihil",
+  "spell.sarps_spells.nihil.guide": "Tres. Duo. Unus.",
 
   "spell.sarps_spells.lions_claw": "Lion's Claw",
   "spell.sarps_spells.lions_claw.guide": "Somersault forwards, striking foes with armament.",
@@ -21,6 +23,14 @@
 
   "school.sarps_spells.sculk": "Sculk",
   "school.sarps_spells.combatart": "Combat Art",
+  "school.sarps_spells.fire_combatart": "Combat Art (Fire)",
+  "school.sarps_spells.ice_combatart": "Combat Art (Ice)",
+  "school.sarps_spells.lightning_combatart": "Combat Art (Lightning)",
+  "school.sarps_spells.ender_combatart": "Combat Art (Ender)",
+  "school.sarps_spells.holy_combatart": "Combat Art (Holy)",
+  "school.sarps_spells.blood_combatart": "Combat Art (Blood)",
+  "school.sarps_spells.nature_combatart": "Combat Art (Nature)",
+  "school.sarps_spells.evocation_combatart": "Combat Art (Evocation)",
 
   "effect.sarps_spells.updraft": "Updraft",
 

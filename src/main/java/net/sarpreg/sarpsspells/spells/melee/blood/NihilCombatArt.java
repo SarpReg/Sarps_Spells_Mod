@@ -26,6 +26,7 @@ import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.effect.OccultMarkEffect;
 import net.sarpreg.sarpsspells.entity.spells.sunburst.SunburstAoe;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
+import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
 import net.sarpreg.sarpsspells.util.AbstractAOW;
 import net.sarpreg.sarpsspells.util.SarpSpellAnims;
 import net.sarpreg.sarpsspells.util.SarparticleHelper;
@@ -46,7 +47,7 @@ public class NihilCombatArt extends AbstractAOW {
 
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.LEGENDARY)
-            .setSchoolResource(SchoolRegistry.BLOOD_RESOURCE)
+            .setSchoolResource(SarpySchoolRegistry.BLOOD_COMBATART_RESOURCE)
             .setMaxLevel(1)
             .setCooldownSeconds(135)
             .build();
@@ -72,6 +73,11 @@ public class NihilCombatArt extends AbstractAOW {
     @Override
     public ResourceLocation getSpellResource() {
         return spellId;
+    }
+
+    @Override
+    public SchoolType getSchoolType() {
+        return SarpySchoolRegistry.BLOOD_COMBATART.get();
     }
 
     @Override
