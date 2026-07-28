@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": {
+    "item": "minecraft:trident"
+  },
+  "addition": {
+    "item": "irons_spellbooks:divine_soulshard"
+  },
+  "template": {
+    "item": "forge:ingots/pyrium"
+  },
+  "result": {
+    "item": "sarps_spells:sanguine_halberd"
+  }
+}
