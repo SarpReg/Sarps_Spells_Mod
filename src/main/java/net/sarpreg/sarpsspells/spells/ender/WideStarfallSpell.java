@@ -30,6 +30,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.entity.spells.bigcomet.BigComet;
+import net.sarpreg.sarpsspells.util.SarparticleHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -134,6 +135,7 @@ public class WideStarfallSpell extends AbstractSpell {
                 shootComet(level, spellLevel, entity, spawn, trajectory);
                 MagicManager.spawnParticles(level, ParticleHelper.VOID_TENTACLE_FOG, spawn.x, spawn.y, spawn.z, 1, 1, 1, 1, 1, false);
                 MagicManager.spawnParticles(level, ParticleHelper.VOID_TENTACLE_FOG, spawn.x, spawn.y, spawn.z, 1, 1, 1, 1, 1, true);
+                MagicManager.spawnParticles(level, SarparticleHelper.STARFALL_SMOKE, spawn.x, spawn.y, spawn.z, 15, 1, 1, 1, 1, false);
             }
     }
 

@@ -2,6 +2,7 @@ package net.sarpreg.sarpsspells;
 
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.sarpreg.sarpsspells.entity.spells.sculk_tendril.SculkTendrilRenderer;
 import net.sarpreg.sarpsspells.registries.*;
 import net.sarpreg.sarpsspells.setup.SModSetup;
 import net.sarpreg.sarpsspells.setup.SPacketDistributor;
@@ -77,7 +79,7 @@ public class SarpsSpellsMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            EntityRenderers.register(EntityRegistry.SCULK_TENDRIL.get(), SculkTendrilRenderer::new);
         }
     }
 
