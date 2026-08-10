@@ -10,8 +10,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+
+import java.util.List;
 
 public class SculkTendrilModel<T extends Entity> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -37,7 +41,11 @@ public class SculkTendrilModel<T extends Entity> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
 
+		float seed = (float) (entity.getX() * entity.getZ()) % 173;
+		float speed = .55f;
+		float f = (float) (seed + entity.tickCount);
 	}
 
 	@Override

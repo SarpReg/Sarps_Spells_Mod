@@ -10,5 +10,6 @@ import org.joml.Vector3f;
 public class SarparticleHelper {
     public static final ParticleOptions SUNSPARK = SarparticleRegistry.SUNSPARK_PARTICLE.get();
     public static final ParticleOptions STARFALL_SMOKE = SarparticleRegistry.STARFALL_SMOKE_PARTICLE.get();
+    public static final ParticleOptions SCULK_TENTACLE_FOG = new FogParticleOptions(new Vector3f(0.0f, 0.075f, .13f), .4f);
 
 }

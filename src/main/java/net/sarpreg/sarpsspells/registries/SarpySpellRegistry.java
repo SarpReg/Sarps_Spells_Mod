@@ -12,6 +12,8 @@ import net.sarpreg.sarpsspells.spells.holy.SunlightLanceSpell;
 import net.sarpreg.sarpsspells.spells.ice.SnowgraveSpell;
 import net.sarpreg.sarpsspells.spells.melee.basic.LionsClawCombatArt;
 import net.sarpreg.sarpsspells.spells.melee.blood.NihilCombatArt;
+import net.sarpreg.sarpsspells.spells.sculk.SculkWardSpell;
+import net.sarpreg.sarpsspells.spells.sculk.ShriekSpell;
 
 import java.util.function.Supplier;
 
@@ -37,6 +39,8 @@ public class SarpySpellRegistry {
     public static final Supplier<AbstractSpell> SNOWGRAVE_SPELL = registerSpell(new SnowgraveSpell());
     public static final Supplier<AbstractSpell> SUNBURST_SPELL = registerSpell(new SunburstSpell());
     public static final Supplier<AbstractSpell> WIDESTARFALL_SPELL = registerSpell(new WideStarfallSpell());
+    public static final Supplier<AbstractSpell> SCULKWARD_SPELL = registerSpell(new SculkWardSpell());
+    public static final Supplier<AbstractSpell> SHRIEK_SPELL = registerSpell(new ShriekSpell());
 
     // ASH OF WAR REGISTRY BELOW
 

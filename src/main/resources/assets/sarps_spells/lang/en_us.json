@@ -13,13 +13,16 @@
   "spell.sarps_spells.snowgrave.guide": "200% TP",
   "spell.sarps_spells.sunburst": "Solar Burst",
   "spell.sarps_spells.sunburst.guide": "Charge holy magic within yourself and unleash it in a shockwave of divine wrath, scorching exposed creatures.",
+  "spell.sarps_spells.shriek": "Shriek",
+  "spell.sarps_spells.shriek.guide": "Shriek forth with a voice of sculk, sending a small boom which passes through solid material and blinds all creatures in its path.",
+
   "spell.sarps_spells.nihil": "Nihil",
   "spell.sarps_spells.nihil.guide": "Tres. Duo. Unus.",
-
   "spell.sarps_spells.lions_claw": "Lion's Claw",
   "spell.sarps_spells.lions_claw.guide": "Somersault forwards, striking foes with armament.",
 
   "entity.sarps_spells.sunlight_lance": "Sunlight Lance",
+  "entity.sarps_spells.sculk_tendril": "Sculk Tendril",
 
   "school.sarps_spells.sculk": "Sculk",
   "school.sarps_spells.combatart": "Combat Art",
