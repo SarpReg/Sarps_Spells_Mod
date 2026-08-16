@@ -113,10 +113,6 @@ public class SunburstSpell extends AbstractSpell {
         });
         float range = 1.7f;
         Vec3 hitLocation = Utils.moveToRelativeGroundLevel(level, Utils.raycastForBlock(level, entity.getEyePosition(), entity.getEyePosition().add(entity.getForward().multiply(range, 0, range)), ClipContext.Fluid.NONE).getLocation(), 3);
-        SunburstAoe aoe = new SunburstAoe(level, radius);
-        aoe.setOwner(entity);
-        aoe.moveTo(hitLocation);
-        level.addFreshEntity(aoe);
         MagicManager.spawnParticles(level, SarparticleHelper.SUNSPARK, entity.getX(), entity.getY(), entity.getZ(), 50, .1, 0, .1, 2, true);
         MagicManager.spawnParticles(level, SarparticleHelper.SUNSPARK, entity.getX(), entity.getY(), entity.getZ(), 65, .1, 0, .1, .5, false);
         CameraShakeManager.addCameraShake(new CameraShakeData(level, 20 + (int) radius, hitLocation, radius * 2 + 5));

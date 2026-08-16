@@ -2,12 +2,14 @@ package net.sarpreg.sarpsspells.player;
 
 import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
+import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.events.SpellTeleportEvent;
 import io.redspace.ironsspellbooks.api.item.CastingImplementData;
 import io.redspace.ironsspellbooks.api.item.UpgradeData;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
@@ -96,6 +98,7 @@ import net.sarpreg.sarpsspells.effect.AscendanceEffect;
 import net.sarpreg.sarpsspells.effect.OccultMarkEffect;
 import net.sarpreg.sarpsspells.registries.SarpItemRegistry;
 import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
+import org.jline.utils.Log;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
@@ -117,6 +120,16 @@ public class SarpServerPlayerEvents {
                     event.setCanceled(true);
                     return;
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onSpellCast(SpellOnCastEvent event) {
+        if (event.getEntity() != null) {
+            if (event.getSpellId() == SpellRegistry.ABYSSAL_SHROUD_SPELL.getId().toString()) {
+                Log.error(SpellRegistry.ABYSSAL_SHROUD_SPELL.getId().toString());
+                event.getEntity().removeEffect(MobEffectRegistry.ABYSSAL_SHROUD.get());
             }
         }
     }

@@ -1,10 +1,7 @@
 package net.sarpreg.sarpsspells.registries;
 
-import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.entity.mobs.*;
 import io.redspace.ironsspellbooks.entity.spells.*;
-import io.redspace.ironsspellbooks.entity.spells.lightning_lance.LightningLanceProjectile;
-import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -14,7 +11,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.entity.spells.sculk_tendril.SculkTendril;
-import net.sarpreg.sarpsspells.entity.spells.sunburst.SunburstAoe;
 import net.sarpreg.sarpsspells.entity.spells.sunlight_lance.SunlightLanceProjectile;
 
 
@@ -36,4 +32,3 @@ public class EntityRegistry {
                     .sized(1f, 1.8f)
                     .clientTrackingRange(64)
                     .build(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "sculk_tendril").toString()));}
-

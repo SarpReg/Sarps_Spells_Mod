@@ -5,18 +5,17 @@ import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
-import io.redspace.ironsspellbooks.api.util.AnimationHolder;
-import io.redspace.ironsspellbooks.api.util.CameraShakeData;
-import io.redspace.ironsspellbooks.api.util.CameraShakeManager;
-import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.api.util.*;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
+import io.redspace.ironsspellbooks.entity.spells.ray_of_frost.RayOfFrostVisualEntity;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,6 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
@@ -99,12 +99,11 @@ public class ShriekSpell extends AbstractSpell {
         List<? extends Entity> entities = level.getEntities(entity, boundingBox);
         for (Entity target : entities) {
             HitResult hit = Utils.checkEntityIntersecting(target, start, end, .4f);
-            if (hit.getType() != HitResult.Type.MISS) {
+            if (hit.getType() != HitResult.Type.MISS && target instanceof LivingEntity) {
                 LivingEntity target2 = (LivingEntity) target;
                 target2.addEffect(new MobEffectInstance(MobEffects.DARKNESS, getEffectLength(spellLevel, entity) * 20, 1, false, false, true));
             }
         }
-
         Vec3 vec3 = entity.getLookAngle().normalize();
         for (int i = 0; i < range; i++) {
             var vec32 = vec3.scale(i).add(entity.getEyePosition());
