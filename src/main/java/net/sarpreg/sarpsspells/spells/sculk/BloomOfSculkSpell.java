@@ -29,6 +29,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.player.SarpSpinAttackType;
+import net.sarpreg.sarpsspells.registries.SarpMobEffectRegistry;
 import net.sarpreg.sarpsspells.registries.SarpySchoolRegistry;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,13 +57,13 @@ public class BloomOfSculkSpell extends AbstractSpell {
         this.manaCostPerLevel = 13;
         this.baseSpellPower = 5;
         this.spellPowerPerLevel = 2;
-        this.castTime = 0;
+        this.castTime = 10;
         this.baseManaCost = 60;
     }
 
     @Override
     public CastType getCastType() {
-        return CastType.INSTANT;
+        return CastType.LONG;
     }
 
     @Override
@@ -98,28 +99,12 @@ public class BloomOfSculkSpell extends AbstractSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
 
+        // SECOND CAST, DIVE ATTACK
         if (playerMagicData.getPlayerRecasts().hasRecastForSpell(getSpellId())) {
-            var hitResult = RaycastBuilder.begin(level, entity)
-                    .range(getRange(spellLevel, entity))
-                    .checkForBlocks(true)
-                    .bbInflation(.15f)
-                    .build();
-            level.addFreshEntity(new EldritchBlastVisualEntity(level, entity.getEyePosition().subtract(0, .75f, 0), hitResult.getLocation(), entity));
-            if (hitResult.getType() == HitResult.Type.ENTITY) {
-                Entity target = ((EntityHitResult) hitResult).getEntity();
-                if (target.canBeHitByProjectile()) {
-                    DamageSources.applyDamage(target, 5, getDamageSource(entity));
-                }
-            }
-            MagicManager.spawnParticles(level, ParticleHelper.UNSTABLE_ENDER, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 50, 0, 0, 0, .3, false);
-        }
-        if (!playerMagicData.getPlayerCooldowns().isOnCooldown(this) && !playerMagicData.getPlayerRecasts().hasRecastForSpell(getSpellId())) {
-            playerMagicData.getPlayerRecasts().addRecast(new RecastInstance(getSpellId(), spellLevel, getRecastCount(spellLevel, entity), 60, castSource, null), playerMagicData);
-
             entity.hasImpulse = true;
             float multiplier = (15 + getSpellPower(spellLevel, entity)) / 20f;
 
-            Vec3 forward = entity.getLookAngle();
+            Vec3 forward = new Vec3(entity.getLookAngle().x, -1, entity.getLookAngle().z);
 
             //Create Dashing Movement Impulse
             var upwardness = forward.dot(new Vec3(0, 1, 0));
@@ -143,9 +128,43 @@ public class BloomOfSculkSpell extends AbstractSpell {
             ));
             entity.hurtMarked = true;
 
-            entity.addEffect(new MobEffectInstance(MobEffectRegistry.VOLT_STRIKE.get(), 10, getDamage(spellLevel, entity), false, false, false));
+            entity.addEffect(new MobEffectInstance(SarpMobEffectRegistry.SCULK_RIPTIDE.get(), 10, getDamage(spellLevel, entity), false, false, false));
             entity.invulnerableTime = 20;
             playerMagicData.getSyncedData().setSpinAttackType(SpinAttackType.RIPTIDE);
+        }
+
+        // FIRST CAST, RISE
+        if (!playerMagicData.getPlayerCooldowns().isOnCooldown(this) && !playerMagicData.getPlayerRecasts().hasRecastForSpell(getSpellId())) {
+            playerMagicData.getPlayerRecasts().addRecast(new RecastInstance(getSpellId(), spellLevel, getRecastCount(spellLevel, entity), 60, castSource, null), playerMagicData);
+
+            entity.hasImpulse = true;
+            float multiplier = (15 + getSpellPower(spellLevel, entity)) / 20f;
+
+            Vec3 forward = new Vec3(0,1,0);
+
+            //Vec3 forward = entity.getLookAngle();
+            //Create Dashing Movement Impulse
+            var upwardness = forward.dot(new Vec3(0, 1, 0));
+            var remap = 0.4f;
+            var impulse = forward.scale(3 * multiplier).multiply(1, remap, 1);
+            //Start Spin Attack
+            if (entity.onGround()) {
+                if (entity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.teleport(serverPlayer.getX(), serverPlayer.getY() + 1, serverPlayer.getZ(), serverPlayer.getYRot(), serverPlayer.getXRot());
+                } else {
+                    entity.move(MoverType.SELF, new Vec3(0.0, 1.1999999F, 0.0));
+                }
+                impulse.add(0, 0.5, 0);
+            } else {
+                impulse.add(0, 0.25, 0);
+            }
+            entity.setDeltaMovement(new Vec3(
+                    Mth.lerp(.75f, entity.getDeltaMovement().x, impulse.x),
+                    Mth.lerp(.75f, entity.getDeltaMovement().y, impulse.y),
+                    Mth.lerp(.75f, entity.getDeltaMovement().z, impulse.z)
+            ));
+            entity.hurtMarked = true;
+            entity.invulnerableTime = 20;
         }
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }

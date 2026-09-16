@@ -1,7 +1,5 @@
 package net.sarpreg.sarpsspells.registries;
 
-import io.redspace.ironsspellbooks.entity.mobs.*;
-import io.redspace.ironsspellbooks.entity.spells.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -31,4 +29,6 @@ public class EntityRegistry {
             ENTITIES.register("sculk_tendril", () -> EntityType.Builder.<SculkTendril>of(SculkTendril::new, MobCategory.MISC)
                     .sized(1f, 1.8f)
                     .clientTrackingRange(64)
-                    .build(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "sculk_tendril").toString()));}
+                    .build(ResourceLocation.fromNamespaceAndPath(SarpsSpellsMod.MODID, "sculk_tendril").toString()));
+}
+

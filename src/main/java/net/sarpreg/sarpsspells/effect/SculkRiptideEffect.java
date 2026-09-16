@@ -1,23 +1,32 @@
 package net.sarpreg.sarpsspells.effect;
 
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.effect.ISyncedMobEffect;
 import io.redspace.ironsspellbooks.effect.MagicMobEffect;
+import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import io.redspace.ironsspellbooks.mixin.LivingEntityAccessor;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import io.redspace.ironsspellbooks.particle.SparkParticleOptions;
+import io.redspace.ironsspellbooks.util.ParticleHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.Vec3;
+import net.sarpreg.sarpsspells.entity.spells.extendedsculktentacle.ExtendedVoidTentacle;
+import net.sarpreg.sarpsspells.registries.SarpySpellRegistry;
 import net.sarpreg.sarpsspells.util.SarparticleHelper;
 import org.joml.Vector3f;
 
 import java.util.List;
+import java.util.UUID;
 
 public class SculkRiptideEffect extends MagicMobEffect implements ISyncedMobEffect {
     public SculkRiptideEffect(MobEffectCategory pCategory, int pColor) {
@@ -32,35 +41,22 @@ public class SculkRiptideEffect extends MagicMobEffect implements ISyncedMobEffe
         }
         List<Entity> list = level.getEntities(livingEntity, livingEntity.getBoundingBox().inflate(.25, .5, .25));
         boolean hit = false;
-        if (!hit &&
-                (!level.noCollision(livingEntity.getBoundingBox().move(livingEntity.getDeltaMovement()).move(livingEntity.getDeltaMovement().normalize().scale(0.1)).deflate(0.1)))) {
-            hit = true;
-        }
-        if (hit) {
-            var x = livingEntity.getX();
-            var y = livingEntity.getY();
-            var z = livingEntity.getZ();
-
-            for (int i = 0; i < 2; i++) {
-                Vec3 random = Utils.getRandomVec3(.2);
-                level.addParticle(new SparkParticleOptions(new Vector3f(.85f, .85f, .85f)), livingEntity.getRandomX(0.75), y + Utils.getRandomScaled(0.75), livingEntity.getRandomZ(0.75), random.x, random.y, random.z);
-            }
-
-            MagicManager.spawnParticles(level, SarparticleHelper.SCULK_TENTACLE_FOG, x, y, z, 30, 0, 0, 0, 1, false);
-            //MagicManager.spawnParticles(level, ParticleHelper.FOG_CAMPFIRE_SMOKE, x, y, z, 2, .08, .08, .08, 0.3, false);
-            MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 3), x, y + .15f, z, 1, 0, 0, 0, 0, true);
-            level.playSound(null, x, y, z, SoundEvents.GENERIC_EXPLODE, livingEntity.getSoundSource(), 2, 0.8f);
-            livingEntity.removeEffect(this);
-        }
-        livingEntity.fallDistance = 0;
-        /*var level = livingEntity.level();
-        if (level.isClientSide) {
-            return;
-        }
-        boolean hit = false;
         UUID ignore = null;
+        if (!list.isEmpty()) {
+            for (Entity entity : list) {
+                if (DamageSources.applyDamage(entity, amplifier, SpellRegistry.VOLT_STRIKE_SPELL.get().getDamageSource(livingEntity))) {
+                    //Guarantee that the entity receives i-frames, since we are damaging every tick
+                    entity.invulnerableTime = 20;
+                    hit = true;
+                    ignore = entity.getUUID();
+                }
+            }
+        }
         if (!hit &&
-                (!level.noCollision(livingEntity.getBoundingBox().move(livingEntity.getDeltaMovement()).move(livingEntity.getDeltaMovement().normalize().scale(0.1)).deflate(0.1)))) {
+                (
+//                        Utils.raycastForBlock(level, livingEntity.position(), livingEntity.position().add(livingEntity.getDeltaMovement()), ClipContext.Fluid.NONE).getType() == HitResult.Type.BLOCK
+                        !level.noCollision(livingEntity.getBoundingBox().move(livingEntity.getDeltaMovement()).move(livingEntity.getDeltaMovement().normalize().scale(0.1)).deflate(0.1))
+                )) {
             hit = true;
         }
         if (hit) {
@@ -71,22 +67,43 @@ public class SculkRiptideEffect extends MagicMobEffect implements ISyncedMobEffe
             for (Entity entity : entities) {
                 double distanceSqr = entity.distanceToSqr(livingEntity.position());
                 if (ignore != entity.getUUID() && distanceSqr < explosionRadiusSqr && entity.canBeHitByProjectile() && Utils.hasLineOfSight(level, losPoint, entity.getBoundingBox().getCenter(), true)) {
-
+                    double p = (1 - distanceSqr / explosionRadiusSqr);
+                    float damage = (float) (amplifier * p * 0.5);
+                    DamageSources.applyDamage(entity, damage, SarpySpellRegistry.BLOOM_OF_SCULK_SPELL.get().getDamageSource(livingEntity));
                 }
             }
-            //livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().normalize().scale(-0.5).add(0, 0.5, 0));
+            livingEntity.setDeltaMovement(new Vec3(0,0,0));
             livingEntity.hurtMarked = true;
 
             var x = livingEntity.getX();
             var y = livingEntity.getY() + 1;
             var z = livingEntity.getZ();
-            MagicManager.spawnParticles(level, ParticleHelper.FOG_CAMPFIRE_SMOKE, x, y, z, 5, .08, .08, .08, 0.3, false);
-            MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.85f, .85f, .85f), 3), x, y + .15f, z, 1, 0, 0, 0, 0, true);
-            level.playSound(null, x, y, z, SoundEvents.GENERIC_EXPLODE, livingEntity.getSoundSource(), 2, 0.8f);
+            MagicManager.spawnParticles(level, ParticleTypes.SCULK_SOUL, x, y, z, 25, .08, .08, .08, 0.3, false);
+            MagicManager.spawnParticles(level, ParticleTypes.SOUL, x, y, z, 75, .1, .1, .1, .5, false);
+            MagicManager.spawnParticles(level, new BlastwaveParticleOptions(new Vector3f(.7f, 1f, 1f), explosionRadius * 2), x, y + .15f, z, 1, 0, 0, 0, 0, true);
+            level.playSound(null, x, y, z, SoundEvents.WARDEN_SONIC_BOOM, livingEntity.getSoundSource(), 4, 0.8f);
             livingEntity.removeEffect(this);
+
+            int rings = 2;
+            int count = 2;
+
+            for (int r = 0; r < rings; r++) {
+                float tentacles = count + r * 2;
+                for (int i = 0; i < tentacles; i++) {
+                    Vec3 random = new Vec3(Utils.getRandomScaled(1), Utils.getRandomScaled(1), Utils.getRandomScaled(1));
+                    Vec3 spawn = livingEntity.getPosition(1).add(new Vec3(0, 0, 1.3 * (r + 1)).yRot(((6.281f / tentacles) * i))).add(random);
+
+                    spawn = Utils.moveToRelativeGroundLevel(level, spawn, 8);
+                    if (!level.getBlockState(BlockPos.containing(spawn).below()).isAir()) {
+                        VoidTentacle tentacle = new ExtendedVoidTentacle(level, livingEntity, 15, 60);
+                        tentacle.moveTo(spawn);
+                        tentacle.setYRot(Utils.random.nextInt(360));
+                        level.addFreshEntity(tentacle);
+                    }
+                }
+            }
         }
         livingEntity.fallDistance = 0;
-        */
     }
 
     @Override

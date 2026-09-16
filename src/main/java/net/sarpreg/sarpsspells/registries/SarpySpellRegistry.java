@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
 import net.sarpreg.sarpsspells.spells.ender.WideStarfallSpell;
 import net.sarpreg.sarpsspells.spells.evocation.UpdraftSpell;
+import net.sarpreg.sarpsspells.spells.holy.DivineMantleSpell;
 import net.sarpreg.sarpsspells.spells.holy.SunburstSpell;
 import net.sarpreg.sarpsspells.spells.holy.SunlightLanceSpell;
 import net.sarpreg.sarpsspells.spells.ice.SnowgraveSpell;
@@ -36,6 +37,7 @@ public class SarpySpellRegistry {
     //public static final Supplier<AbstractSpell> EMERGING_TENTACLES_SPELL = registerSpell(new EmergingTentaclesSpell());
     public static final Supplier<AbstractSpell> SUNLIGHT_LANCE_SPELL = registerSpell(new SunlightLanceSpell());
     //public static final Supplier<AbstractSpell> HOLY_DAGGER_RAIN_SPELL = registerSpell(new OldHolyDaggerRainSpell());
+    public static final Supplier<AbstractSpell> DIVINE_MANTLE_SPELL = registerSpell(new DivineMantleSpell());
     //public static final Supplier<AbstractSpell> LASER_EYES_SPELL = registerSpell(new LaserEyesSpell());
     public static final Supplier<AbstractSpell> SNOWGRAVE_SPELL = registerSpell(new SnowgraveSpell());
     public static final Supplier<AbstractSpell> SUNBURST_SPELL = registerSpell(new SunburstSpell());

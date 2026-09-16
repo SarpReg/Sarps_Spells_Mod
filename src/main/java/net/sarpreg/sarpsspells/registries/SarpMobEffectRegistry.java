@@ -8,10 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.sarpreg.sarpsspells.SarpsSpellsMod;
-import net.sarpreg.sarpsspells.effect.AscendanceEffect;
-import net.sarpreg.sarpsspells.effect.OccultMarkEffect;
-import net.sarpreg.sarpsspells.effect.SnowgraveCastEffect;
-import net.sarpreg.sarpsspells.effect.UpdraftEffect;
+import net.sarpreg.sarpsspells.effect.*;
 
 public class SarpMobEffectRegistry {
     public static final DeferredRegister<MobEffect> MOB_EFFECT_DEFERRED_REGISTER = DeferredRegister.create(Registries.MOB_EFFECT, SarpsSpellsMod.MODID);
@@ -23,4 +20,7 @@ public class SarpMobEffectRegistry {
     public static final RegistryObject<MobEffect> SNOWGRAVE_CAST = MOB_EFFECT_DEFERRED_REGISTER.register("snowgrave_cast", () -> new SnowgraveCastEffect(MobEffectCategory.NEUTRAL, 0xffffff));
     public static final RegistryObject<MobEffect> ASCENDANCE = MOB_EFFECT_DEFERRED_REGISTER.register("ascendance", () -> new AscendanceEffect(MobEffectCategory.BENEFICIAL, 0xffffff));
     public static final RegistryObject<MobEffect> OCCULT_MARK = MOB_EFFECT_DEFERRED_REGISTER.register("occult_mark", () -> new OccultMarkEffect(MobEffectCategory.HARMFUL, 0x701908));
+    public static final RegistryObject<MobEffect> SCULK_RIPTIDE = MOB_EFFECT_DEFERRED_REGISTER.register("sculk_riptide", () -> new SculkRiptideEffect(MobEffectCategory.BENEFICIAL, 0x701908));
+    public static final RegistryObject<MobEffect> DIVINE_MANTLE = MOB_EFFECT_DEFERRED_REGISTER.register("divine_mantle", () -> new DivineMantleEffect(MobEffectCategory.BENEFICIAL, 0xf0e067));
+    public static final RegistryObject<MobEffect> MIST_FORM = MOB_EFFECT_DEFERRED_REGISTER.register("mist_form", () -> new MistFormEffect(MobEffectCategory.BENEFICIAL, 0xffffff));
 }
